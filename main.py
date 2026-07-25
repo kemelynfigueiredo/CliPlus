@@ -6,7 +6,7 @@ from app.routes.comprovante import bp as comprovante_bp
 
 app = APIFlask(__name__)
 
-#Autenticão no Swagger
+# Autenticação no Swagger
 app.security_schemes = {
     "BearerAuth": {
         "type": "http",
@@ -15,6 +15,12 @@ app.security_schemes = {
     }
 }
 
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    return response
 
 
 app.register_blueprint(me_bp)
