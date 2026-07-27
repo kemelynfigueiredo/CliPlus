@@ -17,3 +17,12 @@ def criar_paciente(dados: dict):
         .insert(dados)\
         .execute()
     return response.data[0]
+
+
+def listar_todos(limit: int = 100):
+    response = supabase.table("pacientes")\
+        .select("id, cpf, nome_completo, data_nascimento, telefone, email")\
+        .order("nome_completo", desc=False)\
+        .limit(limit)\
+        .execute()
+    return response.data
